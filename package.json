@@ -1,0 +1,46 @@
+{
+  "name": "vscode-base-ext",
+  "version": "1.0.0",
+  "license": "MIT",
+  "publisher": "MSFT",
+  "engines": {
+    "vscode": "^1.66.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/caleteeter/vscode-base-ext"
+  },
+  "categories": [
+    "Extension Packs",
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:sample.sampleCommand"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "sample.sampleCommand",
+        "title": "Sample Command"
+      }
+    ]
+  },
+  "main": "./out/extension.js",
+  "devDependencies": {
+    "esbuild": "^0.15.10",
+    "eslint": "^8.24.0",
+    "eslint-plugin-header": "^3.1.1",
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.8.4"
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run -S esbuild-base -- --minify",
+    "esbuild-base": "rimraf out && esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
+    "build": "npm run -S esbuild-base -- --sourcemap",
+    "watch": "npm run -S esbuild-base -- --sourcemap --watch",
+    "fmt": "prettier --write \"src/**/*.ts\"&& npm run test -- --fix",
+    "test": "eslint src --ext ts && tsc --noEmit",
+    "package": "npx vsce package"
+  }
+}
